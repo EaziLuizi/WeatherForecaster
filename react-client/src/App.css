@@ -1,0 +1,181 @@
+/*NAV*/
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  padding: 5px 5px 5px 0;
+  background-color: #47910b;
+}
+
+.navbar-title {
+  flex: 2;
+  padding: 5px;
+  font-size: 22px;
+  color: #a9e876;
+  font-weight: 700;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+    'Lucida Sans', Arial, sans-serif;
+}
+
+.navbar-search {
+  flex: 1;
+  display: flex;
+}
+
+.search {
+  width: 550px;
+  margin-right: 5px;
+}
+
+.navbar-btn {
+  width: 40px;
+  height: 38px;
+  margin-right: 5px;
+  border-radius: 50%;
+  border: 0px;
+  background-color: #a9e876;
+}
+
+.navbar-btn:hover {
+  cursor: pointer;
+  background-color: #fff;
+}
+
+/*CARD*/
+
+.dashboard-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 80px;
+  justify-content: center;
+}
+
+.card {
+  flex: 0 1 600px;
+  border-radius: 4px;
+  box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.15);
+  background-color: #47910b;
+  color: #fff;
+  margin: 5px;
+  max-width: 500px;
+}
+
+.card-header {
+  display: flex;
+  height: 70px;
+}
+
+.card-title {
+  flex: 3;
+  padding: 10px;
+}
+
+.card-highlight {
+  font-size: 58px;
+  flex: 1;
+  text-align: right;
+}
+
+.card-delete {
+  flex: 0;
+  visibility: hidden;
+}
+
+.card:hover .card-delete {
+  visibility: visible;
+}
+
+.card-delete button {
+  flex: 0;
+  color: #fff;
+  background-color: #47910b;
+  border: 0px;
+  padding: 5px;
+  font-weight: 600;
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.card-delete button:hover {
+  cursor: pointer;
+}
+
+.card-body {
+  display: flex;
+  color: #ffb005;
+  border-radius: 0 0 4px 4px;
+  padding: 10px;
+  background-color: #fff;
+}
+
+.card-detail {
+  flex: 2;
+  white-space: nowrap;
+  overflow-x: scroll;
+  height: 150px;
+}
+
+.card-forecast {
+  text-align: center;
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  border: 1px solid #ffb005;
+  padding: 5px;
+  background-color: #d6cc3d27;
+  color: #47910b;
+}
+
+.card-forecast-title > div {
+  display: inline-block;
+  width: 50px;
+  text-align: left;
+}
+
+.card-forecast-title > div:last-child {
+  text-align: right;
+}
+
+.card-forecast-img {
+  height: 65px;
+}
+
+.card-forecast-detail > div {
+  display: inline-block;
+  width: 50px;
+  text-align: left;
+}
+
+.card-forecast-detail > div:last-child {
+  text-align: right;
+}
+
+/*Custom Scrollbar*/
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #47910b;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

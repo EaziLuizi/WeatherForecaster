@@ -348,3 +348,15 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# misc
+.DS_Store
+.env.local
+.env.development
+.env.development.local
+.env.test.local
+.env.production.local
+
+
+.appsettings.Development.json
+WeatherForecaster.Service/appsettings.Development.json
