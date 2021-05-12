@@ -18,20 +18,21 @@ namespace WeatherForecaster.Tests
     public class LocationTests
     {
         ILocationService LocationService;
+        DbContextOptions<AppDbContext> Options;
         AppDbContext Context;
 
         public LocationTests()
         {
-            var options = new DbContextOptionsBuilder<AppDbContext>()
+            Options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
 
-            options.Freeze();
-            Context = new AppDbContext(options);
+            Options.Freeze();
         }
 
-        private void PopulateContextWithLocations()
+        private void CreateContextWithLocations()
         {
+            Context = new AppDbContext(Options);
             Context.Locations.AddRange(TestData.AllLocations());
             Context.SaveChanges();
             var mockCustomConfig = new Mock<IOptions<CustomConfig>>();
@@ -39,8 +40,9 @@ namespace WeatherForecaster.Tests
             LocationService = new LocationService(Context, mockCustomConfig.Object);
         }
 
-        private void EmptyLocationsFromContext()
+        private void CreateContextWithNoLocations()
         {
+            Context = new AppDbContext(Options);
             var mockCustomConfig = new Mock<IOptions<CustomConfig>>();
             LocationService = new LocationService(Context, mockCustomConfig.Object);
         }
@@ -48,7 +50,7 @@ namespace WeatherForecaster.Tests
         [Fact]
         public async Task GetLocations_AllTestDataCount_Should_Return6()
         {
-            PopulateContextWithLocations();
+            CreateContextWithLocations();
 
             var actual = await LocationService.GetLocationsAsync();
 
@@ -58,7 +60,7 @@ namespace WeatherForecaster.Tests
         [Fact]
         public async Task GetLocations_AllTestData_Should_ReturnAllLocations()
         {
-            PopulateContextWithLocations();
+            CreateContextWithLocations();
 
             var actual = await LocationService.GetLocationsAsync();
 
@@ -68,7 +70,7 @@ namespace WeatherForecaster.Tests
         [Fact]
         public async Task GetLocation_Should_ReturnLocation4With0Forecasts()
         {
-            PopulateContextWithLocations();
+            CreateContextWithLocations();
 
             var expected = new Location()
             {
@@ -88,11 +90,10 @@ namespace WeatherForecaster.Tests
             Assert.Equal(expectedSerialized, actualSerialized);
         }
 
-
         [Fact]
         public async Task GetLocation_Should_ReturnLocation2NoLat()
         {
-            PopulateContextWithLocations();
+            CreateContextWithLocations();
 
             var expected = new Location()
             {
@@ -113,7 +114,7 @@ namespace WeatherForecaster.Tests
         [Fact]
         public async Task CreateLocation_Should_ReturnLocationWithId1()
         {
-            EmptyLocationsFromContext();
+            CreateContextWithNoLocations();
 
             var newLocation = new Location()
             {
@@ -140,7 +141,7 @@ namespace WeatherForecaster.Tests
         [Fact]
         public async Task CreateLocation_Should_ThrowInvalidOperationExceptionWhenLocationAlreadyExists()
         {
-            PopulateContextWithLocations();
+            CreateContextWithLocations();
 
             var newLocation = new Location()
             {
@@ -165,7 +166,7 @@ namespace WeatherForecaster.Tests
         [Fact]
         public async Task UpdateLocation_Should_UpdateLocationDetails()
         {
-            PopulateContextWithLocations();
+            CreateContextWithLocations();
             var location3 = Context.Locations.FirstOrDefault(x => x.Id == 3);
             location3.Name = "Updated Name";
             location3.Latitude = 0.123;
@@ -185,7 +186,7 @@ namespace WeatherForecaster.Tests
         [Fact]
         public async Task UpdateLocation_Should_ThrowIfLocationDoesNotExist()
         {
-            PopulateContextWithLocations();
+            CreateContextWithLocations();
 
             var newLocation = new Location()
             {
@@ -202,7 +203,7 @@ namespace WeatherForecaster.Tests
         [Fact]
         public async Task DeleteLocation_Should_DeleteLocationFromContext()
         {
-            PopulateContextWithLocations();
+            CreateContextWithLocations();
 
             var location2 = Context.Locations.FirstOrDefault(x => x.Id == 2);
 
@@ -216,7 +217,7 @@ namespace WeatherForecaster.Tests
         [Fact]
         public async Task DeleteLocation_Should_ThrowIfLocationDoesNotExist()
         {
-            PopulateContextWithLocations();
+            CreateContextWithLocations();
 
             await Assert.ThrowsAsync<Exception>(() => LocationService.DeleteLocationAsync(101));
         }
