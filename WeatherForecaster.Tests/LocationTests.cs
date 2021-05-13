@@ -47,6 +47,15 @@ namespace WeatherForecaster.Tests
             LocationService = new LocationService(Context, mockCustomConfig.Object);
         }
 
+        // Confirm test data is legit
+        [Fact]
+        public void TestDataAllLocations_Should_ReturnAllTestData()
+        {
+            CreateContextWithLocations();
+
+            Assert.Equal(6, TestData.AllLocations().Count);
+        }
+
         [Fact]
         public async Task GetLocations_AllTestDataCount_Should_Return6()
         {
@@ -68,7 +77,7 @@ namespace WeatherForecaster.Tests
         }
 
         [Fact]
-        public async Task GetLocation_Should_ReturnLocation4With0Forecasts()
+        public async Task GetLocation_Should_ReturnLocationWithId4()
         {
             CreateContextWithLocations();
 
@@ -91,7 +100,7 @@ namespace WeatherForecaster.Tests
         }
 
         [Fact]
-        public async Task GetLocation_Should_ReturnLocation2NoLat()
+        public async Task GetLocation_Should_ReturnLocationWithId2()
         {
             CreateContextWithLocations();
 
@@ -112,7 +121,7 @@ namespace WeatherForecaster.Tests
         }
 
         [Fact]
-        public async Task CreateLocation_Should_ReturnLocationWithId1()
+        public async Task CreateLocation_Should_ReturnLocationWithId1On_WhenNoLocationsExist()
         {
             CreateContextWithNoLocations();
 
